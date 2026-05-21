@@ -1,196 +1,179 @@
-# PK-VOYAGER // Portfolio Command Hub
+<div align="center">
 
-> A cyber-cosmic portfolio built like a cockpit interface: draggable star map, mission logs, telemetry panels, light/dark modes, and direct comms.
+# `PIYUSH KUMAWAT`
 
-<p align="center">
-  <a href="https://github.com/piyush-of">
-    <img alt="GitHub" src="https://img.shields.io/badge/GitHub-piyush--of-00e5ff?style=for-the-badge&logo=github&logoColor=white&labelColor=050814">
-  </a>
-  <a href="https://linkedin.com/in/piyush-kumawat-1a92ba386">
-    <img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-Piyush%20Kumawat-00e5ff?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=050814">
-  </a>
-  <a href="https://leetcode.com/u/piyush_of">
-    <img alt="LeetCode" src="https://img.shields.io/badge/LeetCode-piyush__of-ff9100?style=for-the-badge&logo=leetcode&logoColor=white&labelColor=050814">
-  </a>
-</p>
+### just an introvert with wifi, building interfaces that feel alive
 
-<p align="center">
-  <img alt="React" src="https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=050814">
-  <img alt="Vite" src="https://img.shields.io/badge/Vite-8-bd00ff?style=flat-square&logo=vite&logoColor=white">
-  <img alt="Status" src="https://img.shields.io/badge/System-Online-00e676?style=flat-square">
-  <img alt="Theme" src="https://img.shields.io/badge/Theme-Dark%20%2F%20Light-00e5ff?style=flat-square">
-</p>
+`ECE Undergrad @ PDPM IIITDM Jabalpur`  
+`Euro International School, Graduated 2025`  
+`Web Dev + UI/UX + DSA + Hardware Curiosity + LLM Experiments`
+
+<br />
+
+[![GitHub](https://img.shields.io/badge/GitHub-piyush--of-050814?style=for-the-badge&logo=github&logoColor=white&labelColor=00e5ff)](https://github.com/piyush-of)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Piyush%20Kumawat-050814?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0A66C2)](https://linkedin.com/in/piyush-kumawat-1a92ba386)
+[![LeetCode](https://img.shields.io/badge/LeetCode-piyush__of-050814?style=for-the-badge&logo=leetcode&logoColor=white&labelColor=ff9100)](https://leetcode.com/u/piyush_of)
+
+</div>
 
 ---
 
-## >_ Incoming Signal
+## `>_ CURRENT SIGNAL`
 
-I am **Piyush Kumawat**, an **ECE undergraduate at PDPM IIITDM Jabalpur**, building at the intersection of hardware discipline, UI/UX craft, and web engineering.
+I do not like boring interfaces.
 
-This repository is my main display terminal. It is not a plain resume page. It is a small interactive universe where every project is a node, every skill is a system module, and every click pulls a mission log from the cockpit.
+My builds usually start from a very human problem:
+
+- people do not know what to wear, so I build fashion tools.
+- students need cleaner portals, so I try making one.
+- devotion needs calm space, so I build Bhagavata.
+- anime watching gets interrupted, so I think about connecting streaming paths.
+- ECE is full of invisible systems, so I explore photonic crystal fibers and hardware logic.
+- AI is not magic to me, it is another system to wire into useful agents.
+
+That is the pattern: **quiet person, loud ideas, wired through code.**
 
 ```txt
-PILOT_ID        : PIYUSH KUMAWAT
-CURRENT_VECTOR  : B.Tech ECE, PDPM IIITDM Jabalpur
-SCHOOL_LOG      : Euro International School, Graduated 2025
-PRIMARY_STACK   : React, CSS, JavaScript, UI/UX, DSA
-STATUS          : Online and building
+IDENTITY      : Piyush Kumawat
+MODE          : introvert with wifi
+BASE          : IIITDM Jabalpur, ECE
+STYLE         : cyber HUDs, clean interactions, expressive UI
+BUILD AREA    : web apps, design systems, student tools, AI/robot agents
+MISSION       : make useful things feel less dead
 ```
 
 ---
 
-## >_ What Makes It Different
+## `>_ SKILL BADGES`
 
-Most portfolios scroll.
+These are based on the languages, frameworks, and skills visible across my repositories and portfolio code.
 
-This one **orbits**.
+### Core Web
 
-- **Holographic project sphere** with draggable star-map physics.
-- **Interactive mission nodes** for projects, skills, bio, and contact.
-- **Cockpit-style control deck** with live IST clock and quick profile actions.
-- **Telemetry overlay** that changes based on the selected module.
-- **Light and dark theme switcher** without breaking the space HUD mood.
-- **Prefilled mail transmission forms** for faster communication.
-- **Responsive cockpit layout** tuned for desktop, tablet, and mobile.
+![HTML5](https://img.shields.io/badge/HTML5-050814?style=for-the-badge&logo=html5&logoColor=E34F26)
+![CSS3](https://img.shields.io/badge/CSS3-050814?style=for-the-badge&logo=css3&logoColor=1572B6)
+![JavaScript](https://img.shields.io/badge/JavaScript-050814?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![TypeScript](https://img.shields.io/badge/TypeScript-050814?style=for-the-badge&logo=typescript&logoColor=3178C6)
+![React](https://img.shields.io/badge/React-050814?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-050814?style=for-the-badge&logo=vite&logoColor=BD34FE)
+
+### Programming And Logic
+
+![Python](https://img.shields.io/badge/Python-050814?style=for-the-badge&logo=python&logoColor=3776AB)
+![C++](https://img.shields.io/badge/C++-050814?style=for-the-badge&logo=cplusplus&logoColor=00599C)
+![C](https://img.shields.io/badge/C-050814?style=for-the-badge&logo=c&logoColor=A8B9CC)
+![SQL](https://img.shields.io/badge/SQL-050814?style=for-the-badge&logo=sqlite&logoColor=00e5ff)
+
+### Design And Build Tools
+
+![Figma](https://img.shields.io/badge/Figma-050814?style=for-the-badge&logo=figma&logoColor=F24E1E)
+![Canva](https://img.shields.io/badge/Canva-050814?style=for-the-badge&logo=canva&logoColor=00C4CC)
+![Node.js](https://img.shields.io/badge/Node.js-050814?style=for-the-badge&logo=nodedotjs&logoColor=5FA04E)
+![GitHub](https://img.shields.io/badge/GitHub-050814?style=for-the-badge&logo=github&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-050814?style=for-the-badge&logo=vercel&logoColor=white)
 
 ---
 
-## >_ Mission Modules
+## `>_ PROJECT CONSTELLATION`
 
-| Module | Type | Signal |
+| Project | Real Signal | Stack Seen |
 | --- | --- | --- |
-| **MUSE - Personal Designer** | Project | AI-powered personal designer engine for interface and styling systems |
-| **Bhagavata - Devotional App** | Project | Calm reading and spiritual experience portal |
-| **Lookism** | Project | High-contrast aesthetic visualizer with expressive UI details |
-| **DSA Metrics** | Skill Node | C++, Python, JavaScript, SQL, trees, graphs, DP, recursion |
-| **ECE Hardware Node** | Skill Node | Signals, digital logic, microcontrollers, circuit thinking |
-| **Pilot Dossier Capsule** | Bio | Education, interests, and personal trajectory |
-| **Transmitter Signal Beacon** | Contact | Direct comms through email and social links |
+| [`piyush-of`](https://github.com/piyush-of/piyush-of) | Main display repository made with "love and efforts and weeks of hardwork" | JavaScript, CSS, HTML |
+| [`Lookism`](https://github.com/piyush-of/Lookism) | A fashion/dressing problem solver for youth | TypeScript, CSS, JavaScript |
+| [`MUSE-Personal-designer`](https://github.com/piyush-of/MUSE-Personal-designer) | A personal fashion/design solution | HTML, JavaScript, CSS |
+| [`Bhagavata`](https://github.com/piyush-of/Bhagavata) | A devotional web experience | JavaScript, CSS, HTML |
+| [`iiitdm-portal`](https://github.com/piyush-of/iiitdm-portal) | A student portal attempt for IIITDM using modern tech | JavaScript, HTML, CSS |
+| [`Design-and-Simulation-of-Photonic-Crystal-Fibers-web`](https://github.com/piyush-of/Design-and-Simulation-of-Photonic-Crystal-Fibers-web) | ECE-flavored web work around photonic crystal fibers | HTML, CSS, JavaScript |
+| [`LLM_BASED_BOT`](https://github.com/piyush-of/LLM_BASED_BOT) | Early bot/AI system experiments | Python, C++, C |
+| [`llm-powered-robot-agent`](https://github.com/piyush-of/llm-powered-robot-agent) | Robot-agent direction with LLM logic | Python |
+| [`Anisaku-`](https://github.com/piyush-of/Anisaku-) | Anime streaming connection idea | Concept repo |
 
 ---
 
-## >_ Interface Preview
+## `>_ DEPLOYED SIGNALS`
 
-The site is designed as a futuristic command bridge:
+- [`Lookism`](https://lookism-six.vercel.app/)  
+  Fashion/dressing focused visual problem solver.
 
-```txt
-+--------------------------------------------------------------+
-| PK-VOYAGER // HUB                       [BRIDGE] [MISSIONS] |
-+-------------------+----------------------+-------------------+
-| PILOT CONTROL     | HOLOGRAPHIC STAR MAP | TELEMETRY LOGS    |
-| avatar + clock    | draggable nodes      | selected module   |
-| quick links       | orbit interface      | mission details   |
-+-------------------+----------------------+-------------------+
-```
+- [`Bhagavata`](https://bhagavata.vercel.app)  
+  Devotional web space, built with calm intent.
 
-Every visual element is meant to feel like part of the same system: neon trims, telemetry labels, orbit lines, diagnostic text, and glass panels.
+- [`iiitdm-portal`](https://iiitdm-portal.vercel.app)  
+  Student portal concept for college workflows.
 
 ---
 
-## >_ Tech Stack
+## `>_ WHAT I AM ACTUALLY BUILDING TOWARD`
 
-```txt
-Frontend Engine : React 19
-Build System    : Vite 8
-Styling         : CSS custom properties, responsive layouts, glass HUD panels
-Interaction     : React state, drag physics, timed telemetry streams
-Quality Gate    : ESLint
-Deployment Fit  : Static hosting ready
-```
+I am not trying to look like every other developer profile.
+
+I am trying to become the kind of engineer who can:
+
+- build interfaces that have personality without losing function.
+- connect design taste with actual usable engineering.
+- use DSA to think cleaner, not just solve random problems.
+- bring ECE thinking into web, AI, and hardware-facing systems.
+- make small projects that feel like they were made by a real person.
 
 ---
 
-## >_ Local Launch Sequence
+## `>_ PORTFOLIO COMMAND HUB`
 
-Clone the repository and start the command hub:
+This repository powers my cockpit-style portfolio.
+
+It has:
+
+- draggable holographic project sphere.
+- cyber mission logs.
+- live IST cockpit clock.
+- dark/light HUD theme.
+- contact transmitter with prefilled email.
+- project cards connected to my actual GitHub work.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build for production:
-
 ```bash
 npm run build
-```
-
-Run lint checks:
-
-```bash
 npm run lint
 ```
 
-Preview the production build:
-
-```bash
-npm run preview
-```
-
 ---
 
-## >_ Repository Map
+## `>_ EDUCATION LOG`
 
 ```txt
-portfolio/
-|-- public/
-|   |-- avatar.png
-|   |-- light_avatar.png
-|   |-- favicon.svg
-|   `-- icons.svg
-|-- src/
-|   |-- components/
-|   |   |-- ControlDeck.jsx
-|   |   |-- ProjectOverlay.jsx
-|   |   |-- ProjectPore.jsx
-|   |   `-- ProjectSphere.jsx
-|   |-- App.jsx
-|   |-- index.css
-|   `-- main.jsx
-|-- package.json
-`-- vite.config.js
+2025 - 2029   B.Tech ECE
+              PDPM IIITDM Jabalpur
+
+Graduated 2025
+              Euro International School
 ```
 
 ---
 
-## >_ Featured Systems
-
-### Holographic Star Map
-
-The central portfolio navigation is a draggable sphere generated from project nodes. Each node has depth, opacity, scaling, active state, and a custom SVG identity.
-
-### Telemetry Overlay
-
-Selecting a node opens a log-style panel. Projects show stack and source links. Skills show competency groups. Bio shows education and interests. Contact opens a message transmitter.
-
-### Theme Matrix
-
-Dark mode carries the deep-space cockpit feel. Light mode keeps the same structure but recalibrates colors for clarity and readability.
-
----
-
-## >_ Connect
+## `>_ COMMS`
 
 ```txt
 EMAIL    : piyush.kumawat@gmail.com
 PHONE    : +91-9666032914
-LOCATION : IIITDM Jabalpur, Madhya Pradesh, India
+GITHUB   : github.com/piyush-of
+LINKEDIN : linkedin.com/in/piyush-kumawat-1a92ba386
+LEETCODE : leetcode.com/u/piyush_of
 ```
-
-- GitHub: [github.com/piyush-of](https://github.com/piyush-of)
-- LinkedIn: [piyush-kumawat-1a92ba386](https://linkedin.com/in/piyush-kumawat-1a92ba386)
-- LeetCode: [leetcode.com/u/piyush_of](https://leetcode.com/u/piyush_of)
 
 ---
 
-## >_ Final Transmission
+<div align="center">
 
-This portfolio is built to feel like entering a system, not reading a document.
+### `SYSTEM STATUS: ONLINE`
 
-It says: I build interfaces with taste, I like engineering details, and I care about making software feel alive.
+I build because I get obsessed with ideas.  
+I polish because vibe matters.  
+I keep learning because the next version can always be sharper.
 
-```txt
-SYSTEM_READY
-MISSION_LOGS_LOADED
-BEACON_ACTIVE
-```
+`quiet mind // loud interface // always shipping`
+
+</div>
