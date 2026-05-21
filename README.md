@@ -4,8 +4,7 @@
 
 ### just an introvert with wifi, building interfaces that feel alive
 
-`ECE Undergrad @ PDPM IIITDM Jabalpur`  
-`Euro International School, Graduated 2025`  
+`ECE Undergrad @ PDPM IIITDM Jabalpur`    
 `Web Dev + UI/UX + DSA + Hardware Curiosity + LLM Experiments`
 
 <br />
