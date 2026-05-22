@@ -15,33 +15,7 @@
 
 </div>
 
----
 
-## `>_ CURRENT SIGNAL`
-
-I do not like boring interfaces.
-
-My builds usually start from a very human problem:
-
-- people do not know what to wear, so I build fashion tools.
-- students need cleaner portals, so I try making one.
-- devotion needs calm space, so I build Bhagavata.
-- anime watching gets interrupted, so I think about connecting streaming paths.
-- ECE is full of invisible systems, so I explore photonic crystal fibers and hardware logic.
-- AI is not magic to me, it is another system to wire into useful agents.
-
-That is the pattern: **quiet person, loud ideas, wired through code.**
-
-```txt
-IDENTITY      : Piyush Kumawat
-MODE          : introvert with wifi
-BASE          : IIITDM Jabalpur, ECE
-STYLE         : cyber HUDs, clean interactions, expressive UI
-BUILD AREA    : web apps, design systems, student tools, AI/robot agents
-MISSION       : make useful things feel less dead
-```
-
----
 
 ## `>_ SKILL BADGES`
 
@@ -87,18 +61,6 @@ These are based on the languages, frameworks, and skills visible across my repos
 | [`llm-powered-robot-agent`](https://github.com/piyush-of/llm-powered-robot-agent) | Robot-agent direction with LLM logic | Python |
 | [`Anisaku-`](https://github.com/piyush-of/Anisaku-) | Anime streaming connection idea | Concept repo |
 
----
-
-## `>_ DEPLOYED SIGNALS`
-
-- [`Lookism`](https://lookism-six.vercel.app/)  
-  Fashion/dressing focused visual problem solver.
-
-- [`Bhagavata`](https://bhagavata.vercel.app)  
-  Devotional web space, built with calm intent.
-
-- [`iiitdm-portal`](https://iiitdm-portal.vercel.app)  
-  Student portal concept for college workflows.
 
 ---
 
