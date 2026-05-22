@@ -116,39 +116,12 @@ I am trying to become the kind of engineer who can:
 
 ---
 
-## `>_ PORTFOLIO COMMAND HUB`
-
-This repository powers my cockpit-style portfolio.
-
-It has:
-
-- draggable holographic project sphere.
-- cyber mission logs.
-- live IST cockpit clock.
-- dark/light HUD theme.
-- contact transmitter with prefilled email.
-- project cards connected to my actual GitHub work.
-
-```bash
-npm install
-npm run dev
-```
-
-```bash
-npm run build
-npm run lint
-```
-
----
 
 ## `>_ EDUCATION LOG`
 
 ```txt
 2025 - 2029   B.Tech ECE
               PDPM IIITDM Jabalpur
-
-Graduated 2025
-              Euro International School
 ```
 
 ---
