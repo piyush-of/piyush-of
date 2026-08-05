@@ -1,606 +1,670 @@
-import { useState, useEffect } from 'react';
-import ControlDeck from './components/ControlDeck';
-import ProjectSphere from './components/ProjectSphere';
-import ProjectOverlay from './components/ProjectOverlay';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import { gsap } from 'gsap';
+
+const profile = {
+  name: 'Piyush Kumawat',
+  email: 'piyush.kumawat0412@gmail.com',
+  phone: '+91 9660329142',
+  github: 'https://github.com/piyush-of',
+  linkedin: 'https://linkedin.com/in/piyush-kumawat-1a92ba386',
+  leetcode: 'https://leetcode.com/u/piyush_of',
+};
+
+const navItems = [
+  { label: 'Home', href: '#top' },
+  { label: 'Work', href: '#work' },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Contact', href: '#contact' },
+];
+
+const heroRoles = ['Engineering Student', 'Software Developer', 'Startup Builder'];
+
+const projects = [
+  {
+    name: 'MUSE',
+    label: 'AI Fashion Intelligence',
+    year: '2026',
+    number: '01',
+    problem: 'Personal styling tools rarely turn body, tone, and wardrobe context into practical decisions.',
+    solution:
+      'Built a full-stack SaaS platform with AI outfit analysis, skin-tone profiles, secure auth, CI/CD, and production deployment.',
+    outcome: '11 personalized style profiles, JWT refresh-token security, Docker Compose, Vercel, Railway, and Neon PostgreSQL.',
+    stack: ['React 19', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Docker', 'Gemini API'],
+    github: 'https://github.com/piyush-of/MUSE-Personal-designer',
+    live: '',
+    accent: 'cyan',
+  },
+  {
+    name: 'Lookism',
+    label: 'Privacy-first AI Analyzer',
+    year: '2026',
+    number: '02',
+    problem: 'AI photo analysis feels risky when users cannot tell what happens to personal images.',
+    solution:
+      'Created a Next.js product that encrypts uploads client-side, decrypts only in server memory, and zeroes buffers after analysis.',
+    outcome: 'A privacy-led product story powered by Gemini vision for body shape, undertone, and styling recommendations.',
+    stack: ['Next.js 15', 'React', 'TypeScript', 'Web Crypto API', 'Gemini Vision'],
+    github: 'https://github.com/piyush-of/Lookism',
+    live: 'https://lookism-six.vercel.app/',
+    accent: 'violet',
+  },
+  {
+    name: 'IIITDM Portal',
+    label: 'College ERP System',
+    year: '2026',
+    number: '03',
+    problem: 'Academic workflows become slow when student, faculty, and admin tools are scattered.',
+    solution:
+      'Built a role-based ERP for attendance, assignments, notices, result tracking, CGPA views, and protected routes.',
+    outcome: 'A practical MongoDB-backed REST API and permission model for campus operations.',
+    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'REST API'],
+    github: 'https://github.com/piyush-of/iiitdm-portal',
+    live: 'https://iiitdm-portal.vercel.app',
+    accent: 'blue',
+  },
+  {
+    name: 'Bhagavata',
+    label: 'Devotional Web Space',
+    year: '2026',
+    number: '04',
+    problem: 'Spiritual reading online is often surrounded by visual noise.',
+    solution: 'Created a calm reading-first devotional interface with restrained interaction and focused atmosphere.',
+    outcome: 'A softer product design exercise around attention, reflection, and emotional pacing.',
+    stack: ['JavaScript', 'CSS', 'HTML', 'Vercel'],
+    github: 'https://github.com/piyush-of/Bhagavata',
+    live: 'https://bhagavata.vercel.app',
+    accent: 'cyan',
+  },
+];
+
+const metrics = [
+  { value: '3+', label: 'Full-stack products' },
+  { value: '11', label: 'AI style profiles' },
+  { value: '7.6', label: 'CGPA at IIITDM' },
+  { value: '2026', label: 'GSSoC contributor' },
+];
+
+const journey = [
+  {
+    period: '2025 - 2029',
+    title: 'B.Tech ECE at IIITDM Jabalpur',
+    body: 'Building a foundation in electronics, communication systems, and engineering discipline.',
+  },
+  {
+    period: '2026',
+    title: 'Full-stack product experiments',
+    body: 'Shipping fashion AI, student workflow systems, and focused web experiences with production tooling.',
+  },
+  {
+    period: 'Now',
+    title: 'Design-led engineering direction',
+    body: 'Combining frontend craft, privacy-aware architecture, and startup-style product storytelling.',
+  },
+];
+
+const skills = ['C++', 'DSA', 'JavaScript', 'React', 'Next.js', 'Tailwind', 'Git', 'Node.js', 'TypeScript'];
+
+const containerStagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const riseIn = {
+  hidden: { opacity: 0, y: 34, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.78, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.92, y: 22 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+function ArrowIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" focusable="false">
+      <path d="M5 15 15 5M8 5h7v7" />
+    </svg>
+  );
+}
+
+function SplitName() {
+  return (
+    <motion.h1 className="hero-title" variants={containerStagger} initial="hidden" animate="visible">
+      {['PIYUSH', 'KUMAWAT'].map((word) => (
+        <span className="hero-word" key={word}>
+          {word.split('').map((letter, index) => (
+            <motion.span
+              aria-hidden="true"
+              variants={{
+                hidden: { y: '112%', rotate: index % 2 ? 4 : -4 },
+                visible: {
+                  y: '0%',
+                  rotate: 0,
+                  transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] },
+                },
+              }}
+              key={`${word}-${letter}-${index}`}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </span>
+      ))}
+      <span className="sr-only">Piyush Kumawat</span>
+    </motion.h1>
+  );
+}
+
+function SectionHeader({ eyebrow, title, copy }) {
+  return (
+    <motion.div
+      className="section-header"
+      variants={containerStagger}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-120px' }}
+    >
+      <motion.p className="eyebrow" variants={riseIn}>
+        {eyebrow}
+      </motion.p>
+      <motion.h2 variants={riseIn}>{title}</motion.h2>
+      {copy && <motion.p variants={riseIn}>{copy}</motion.p>}
+    </motion.div>
+  );
+}
+
+function OrbitalVisual({ mouseX, mouseY }) {
+  const rotateX = useTransform(mouseY, [0, 1], [8, -8]);
+  const rotateY = useTransform(mouseX, [0, 1], [-10, 10]);
+  const avatarX = useTransform(mouseX, [0, 1], [-18, 18]);
+  const avatarY = useTransform(mouseY, [0, 1], [-14, 14]);
+
+  return (
+    <motion.div
+      className="hero-orbit"
+      style={{ rotateX, rotateY }}
+      initial={{ opacity: 0, scale: 0.82, y: 44 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 1.1, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="orbit-ring ring-one" />
+      <div className="orbit-ring ring-two" />
+      <div className="orbit-ring ring-three" />
+      <motion.div className="avatar-shell" style={{ x: avatarX, y: avatarY }}>
+        <img src="/avatar-boy.svg" alt="Stylized avatar of Piyush Kumawat" />
+      </motion.div>
+      <motion.div
+        className="floating-chip chip-one"
+        animate={{ y: [0, -14, 0], rotate: [0, 2, 0] }}
+        transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        React / Next.js
+      </motion.div>
+      <motion.div
+        className="floating-chip chip-two"
+        animate={{ y: [0, 12, 0], rotate: [0, -2, 0] }}
+        transition={{ duration: 5.6, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        AI Products
+      </motion.div>
+      <motion.div
+        className="floating-chip chip-three"
+        animate={{ y: [0, -10, 0], x: [0, 8, 0] }}
+        transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        ECE Systems
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function ProjectCard({ project, index }) {
+  return (
+    <motion.article
+      className={`project-card ${project.accent}`}
+      variants={scaleIn}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+      whileHover={{ y: -12, rotateX: 2, rotateY: index % 2 ? -2 : 2 }}
+      transition={{ type: 'spring', stiffness: 190, damping: 22 }}
+    >
+      <div className="project-preview" aria-hidden="true">
+        <span>{project.number}</span>
+        <div className="preview-grid" />
+        <div className="preview-glow" />
+      </div>
+      <div className="project-content">
+        <div className="project-meta">
+          <span>{project.label}</span>
+          <span>{project.year}</span>
+        </div>
+        <h3>{project.name}</h3>
+        <div className="project-story">
+          <p>
+            <strong>Problem.</strong> {project.problem}
+          </p>
+          <p>
+            <strong>Solution.</strong> {project.solution}
+          </p>
+          <p>
+            <strong>Signal.</strong> {project.outcome}
+          </p>
+        </div>
+        <div className="tag-row">
+          {project.stack.map((item) => (
+            <span key={item}>{item}</span>
+          ))}
+        </div>
+        <div className="project-actions">
+          {project.live && (
+            <a href={project.live} target="_blank" rel="noreferrer">
+              Live Demo <ArrowIcon />
+            </a>
+          )}
+          <a href={project.github} target="_blank" rel="noreferrer">
+            GitHub <ArrowIcon />
+          </a>
+          <a href={`#case-${project.number}`}>Case Study</a>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
 
 export default function App() {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [isLightTheme, setIsLightTheme] = useState(false);
+  const cursorRef = useRef(null);
+  const auraRef = useRef(null);
+  const heroRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+  const smoothMouseX = useSpring(mouseX, { stiffness: 90, damping: 24, mass: 0.4 });
+  const smoothMouseY = useSpring(mouseY, { stiffness: 90, damping: 24, mass: 0.4 });
+  const { scrollYProgress } = useScroll();
+  const progressScale = useSpring(scrollYProgress, { stiffness: 120, damping: 26 });
+  const heroY = useTransform(scrollYProgress, [0, 0.32], [0, -120]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.26], [1, 0.18]);
+  const featuredProjects = useMemo(() => projects.slice(0, 3), []);
 
-  // Apply light-theme class to document body
   useEffect(() => {
-    if (isLightTheme) {
-      document.body.classList.add('light-theme');
-    } else {
-      document.body.classList.remove('light-theme');
-    }
-  }, [isLightTheme]);
+    document.documentElement.dataset.theme = 'dark';
+    const timeout = window.setTimeout(() => setIsLoading(false), 950);
+    return () => window.clearTimeout(timeout);
+  }, []);
 
-  const toggleTheme = () => {
-    setIsLightTheme(prev => !prev);
-  };
+  useEffect(() => {
+    const cursor = cursorRef.current;
+    const aura = auraRef.current;
+    if (!cursor || !aura) return undefined;
 
-  // Core portfolio modules mapped onto coordinates pores on the 3D Holographic Star Map
-  const projectsData = [
-    {
-      id: 'muse',
-      title: 'MUSE — Personal Designer',
-      type: 'project',
-      badge: 'MISSION: DESIGN',
-      tagline: 'AI-Powered Personal Designer Engine',
-      description: 'An AI-powered design environment helping developers construct interfaces and styling tokens dynamically. Implements visual layout algorithms and seamless UX structures.',
-      skills: ['React.js', 'Node.js', 'CSS', 'Figma', 'Stitch'],
-      links: { github: 'github.com/piyush-of/MUSE-Personal-Designer' },
-      color: 'var(--neon-cyan)',
-      // Cute robot face outline
-      svgPaths: [
-        'M 16 32 A 16 16 0 0 1 48 32 L 48 44 A 4 4 0 0 1 44 48 L 20 48 A 4 4 0 0 1 16 44 Z', // Head
-        'M 22 36 A 2.5 2.5 0 1 1 27 36 M 37 36 A 2.5 2.5 0 1 1 42 36', // Eyes
-        'M 28 42 L 36 42', // Mouth
-        'M 32 16 L 32 8 M 28 8 L 36 8', // Antenna
-        'M 12 52 L 20 44 L 24 48 Z' // Brush
-      ],
-      svgFill: ['rgba(0, 229, 255, 0.12)', 'none', 'none', 'none', 'var(--neon-cyan)']
-    },
-    {
-      id: 'bhagavata',
-      title: 'Bhagavata — Devotional App',
-      type: 'project',
-      badge: 'MISSION: SPIRITUAL',
-      tagline: 'Immersive Devotional Experience',
-      description: 'A beautifully crafted web app offering textual readings, spiritual guidelines, and calming ambient soundscapes. Built to provide a meditative focus portal.',
-      skills: ['HTML', 'CSS', 'JavaScript', 'PHP'],
-      links: { github: 'github.com/piyush-of/Bhagavata' },
-      color: 'var(--neon-purple)',
-      // Lotus flower outline
-      svgPaths: [
-        'M 32 12 C 20 26 14 38 32 54 C 50 38 44 26 32 12 Z', // Center petal
-        'M 32 26 C 10 32 14 46 32 54 Z', // Left petal
-        'M 32 26 C 54 32 50 46 32 54 Z', // Right petal
-        'M 18 52 C 24 58 40 58 46 52 Z' // Lotus base
-      ],
-      svgFill: ['rgba(189, 0, 255, 0.12)', 'rgba(189, 0, 255, 0.08)', 'rgba(189, 0, 255, 0.08)', 'var(--neon-purple)']
-    },
-    {
-      id: 'lookism',
-      title: 'Lookism',
-      type: 'project',
-      badge: 'MISSION: AESTHETICS',
-      tagline: 'Aesthetic Web Visualizer',
-      description: 'A high-contrast visual showcase built to explore cells, outline borders, fluid hover micro-interactions, and visual layouts designed to elevate interface delight.',
-      skills: ['JavaScript', 'CSS', 'HTML', 'Canva'],
-      links: { github: 'github.com/piyush-of/Lookism' },
-      color: 'var(--neon-amber)',
-      // Futuristic glasses outline
-      svgPaths: [
-        'M 10 26 L 28 26 L 25 40 L 13 40 Z', // Left lens
-        'M 36 26 L 54 26 L 51 40 L 39 40 Z', // Right lens
-        'M 28 30 L 36 30', // Bridge
-        'M 8 20 L 56 20 M 14 14 L 50 14' // Speedlines
-      ],
-      svgFill: ['rgba(255, 145, 0, 0.15)', 'rgba(255, 145, 0, 0.15)', 'none', 'none']
-    },
-    {
-      id: 'dsa',
-      title: 'DSA Metrics',
-      type: 'skills',
-      badge: 'MODULE: LOGIC',
-      tagline: 'Data Structures & Algorithms Repository',
-      description: 'Mastery in algorithmic problem solving and time-complexity constraints. Proficient in structure optimizations, dynamic trees, and recursion graphs.',
-      skillGroups: [
-        { name: 'Core Languages', items: ['C++', 'Python', 'JavaScript', 'SQL'] },
-        { name: 'Structures & Tech', items: ['Trees', 'Graphs', 'Dynamic Programming', 'Recursion', 'Binary Search'] }
-      ],
-      color: 'var(--neon-green)',
-      // Angular braces / swords
-      svgPaths: [
-        'M 14 50 L 50 14 M 44 12 L 52 20', // Diagonal line
-        'M 50 50 L 14 14 M 20 12 L 12 20', // Diagonal line 2
-        'M 18 44 L 22 48 M 42 44 L 46 48'  // Trims
-      ],
-      svgFill: []
-    },
-    {
-      id: 'ece',
-      title: 'ECE Hardware Node',
-      type: 'skills',
-      badge: 'MODULE: HARDWARE',
-      tagline: 'IIITDM Jabalpur ECE Undergraduate',
-      description: 'Training in core Electronics & Communication Engineering. Fascinated by circuit design, IoT protocols, microcontrollers, and logic synthesis.',
-      skillGroups: [
-        { name: 'Hardware Competency', items: ['Signals & Systems', 'Digital Logic Gates', 'Microcontrollers', 'Framer / PCB Design'] },
-        { name: 'Design Systems', items: ['Figma Tokenization', 'Canvas Visuals', 'Stitch Tools'] }
-      ],
-      color: 'var(--neon-purple)',
-      // Oscillating frequency waveform outline
-      svgPaths: [
-        'M 8 32 L 20 32 L 24 20 L 28 44 L 32 20 L 36 44 L 40 32 L 56 32', // Schematic wave
-        'M 18 16 L 46 16 L 46 48 L 18 48 Z' // Frame outline
-      ],
-      svgFill: ['none', 'rgba(189, 0, 255, 0.08)']
-    },
-    {
-      id: 'bio',
-      title: 'Pilot Dossier Capsule',
-      type: 'bio',
-      badge: 'MODULE: DATA',
-      tagline: 'Piyush Kumawat Profile Info',
-      description: 'B.Tech student at IIITDM Jabalpur. Blending technical engineering discipline with creative UI/UX styling to construct interactive software dashboards.',
-      timeline: [
-        { year: '2025 - 2029', title: 'B.Tech - ECE', sub: 'PDPM IIITDM Jabalpur' },
-        { year: 'Graduated 2025', title: 'Higher Secondary', sub: 'Euro International School' }
-      ],
-      interests: ['Interactive UI/UX', 'System Telemetry', 'DSA Arenas', 'Open Source Sync'],
-      color: 'var(--neon-cyan)',
-      // Star diploma scroll outline
-      svgPaths: [
-        'M 14 14 L 50 14 C 54 14 54 22 50 22 L 14 22 C 10 22 10 14 14 14 Z', // Scroll top
-        'M 16 22 L 16 46 C 16 52 20 52 20 46 M 48 22 L 48 46 C 48 52 52 52 52 46', // Side flaps
-        'M 32 22 L 32 38 L 27 34 L 32 38 L 37 34' // Ribbon pointer
-      ],
-      svgFill: ['rgba(0, 229, 255, 0.1)', 'none', 'none']
-    },
-    {
-      id: 'contact',
-      title: 'Transmitter Signal Beacon',
-      type: 'contact',
-      badge: 'MODULE: COMMS',
-      tagline: 'Establish Communications Beam',
-      description: 'Ready to sync signals? Fill out the coordinates form below and broadcast directly to my cockpit receiver.',
-      phone: '+91-9666032914',
-      email: 'piyush.kumawat@gmail.com',
-      color: 'var(--neon-amber)',
-      // Telemetry dish transmitter outline
-      svgPaths: [
-        'M 12 24 A 20 20 0 0 1 52 24', // Outer arc
-        'M 32 24 L 32 46 L 22 52 L 42 52', // Stand leg
-        'M 24 16 A 8 8 0 0 1 40 16 M 28 10 A 4 4 0 0 1 36 10' // Signal waves
-      ],
-      svgFill: []
-    }
-  ];
+    const moveCursor = (event) => {
+      gsap.to(cursor, {
+        x: event.clientX,
+        y: event.clientY,
+        duration: 0.18,
+        ease: 'power3.out',
+      });
+      gsap.to(aura, {
+        x: event.clientX,
+        y: event.clientY,
+        duration: 0.55,
+        ease: 'power3.out',
+      });
+    };
 
-  const handleSelectPore = (project) => {
-    setSelectedProject(project);
-    // Smoothly scroll cockpit HUD section into view when interactive elements are clicked
-    const element = document.getElementById('home');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+    window.addEventListener('pointermove', moveCursor, { passive: true });
+    return () => window.removeEventListener('pointermove', moveCursor);
+  }, []);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return undefined;
+
+    const handleMove = (event) => {
+      const rect = hero.getBoundingClientRect();
+      const nextX = Math.min(Math.max((event.clientX - rect.left) / rect.width, 0), 1);
+      const nextY = Math.min(Math.max((event.clientY - rect.top) / rect.height, 0), 1);
+      mouseX.set(nextX);
+      mouseY.set(nextY);
+      hero.style.setProperty('--pointer-x', `${nextX * 100}%`);
+      hero.style.setProperty('--pointer-y', `${nextY * 100}%`);
+    };
+
+    hero.addEventListener('pointermove', handleMove, { passive: true });
+    return () => hero.removeEventListener('pointermove', handleMove);
+  }, [mouseX, mouseY]);
 
   const handleContactSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const name = data.get('name')?.toString().trim();
-    const email = data.get('email')?.toString().trim();
-    const message = data.get('message')?.toString().trim();
-    const subject = encodeURIComponent(`Portfolio message from ${name || 'visitor'}`);
+    const name = data.get('name')?.toString().trim() || 'Portfolio visitor';
+    const email = data.get('email')?.toString().trim() || 'No email provided';
+    const message = data.get('message')?.toString().trim() || 'No message provided';
+    const subject = encodeURIComponent(`Portfolio inquiry from ${name}`);
     const body = encodeURIComponent(`${message}\n\nFrom: ${name}\nEmail: ${email}`);
 
-    window.location.href = `mailto:piyush.kumawat@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
     event.currentTarget.reset();
   };
 
   return (
-    <div className="space-bg">
-      {/* Floating navigation bar */}
-      <nav className="site-nav">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{
-            width: '12px',
-            height: '12px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--neon-cyan)',
-            boxShadow: '0 0 8px var(--neon-cyan)'
-          }}></div>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', fontWeight: 'bold', letterSpacing: '1.5px' }}>
-            PK-VOYAGER // HUB
-          </span>
+    <main className="site-shell" id="top">
+      <a className="skip-link" href="#content">Skip to content</a>
+      <motion.div className="scroll-progress" style={{ scaleX: progressScale }} aria-hidden="true" />
+      <div className="cursor-dot" ref={cursorRef} aria-hidden="true" />
+      <div className="cursor-aura" ref={auraRef} aria-hidden="true" />
+
+      {isLoading && (
+        <motion.div
+          className="loader"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
+          aria-live="polite"
+          aria-label="Loading portfolio"
+        >
+          <motion.div
+            className="loader-mark"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: 'linear' }}
+          />
+          <span>Initializing portfolio</span>
+        </motion.div>
+      )}
+
+      <header className="topbar">
+        <a className="brand-mark" href="#top" aria-label="Piyush Kumawat home">
+          <span>PK</span>
+          <strong>Piyush Kumawat</strong>
+        </a>
+        <nav className="nav-links" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <a href={item.href} key={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <a className="nav-cta" href={`mailto:${profile.email}`}>
+          Let&apos;s talk
+        </a>
+      </header>
+
+      <section className="hero-section" id="content" ref={heroRef} aria-labelledby="hero-title">
+        <div className="hero-backdrop" aria-hidden="true">
+          <motion.div className="hero-grid" style={{ y: heroY, opacity: heroOpacity }} />
+          <div className="hero-noise" />
+          <motion.div
+            className="hero-beam beam-one"
+            animate={{ opacity: [0.45, 0.82, 0.45], scale: [1, 1.08, 1] }}
+            transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="hero-beam beam-two"
+            animate={{ opacity: [0.35, 0.7, 0.35], rotate: [0, 8, 0] }}
+            transition={{ duration: 7.5, repeat: Infinity, ease: 'easeInOut' }}
+          />
         </div>
 
-        <div className="nav-links">
-          <a href="#home" className="cyber-btn" style={{ fontSize: '9px', padding: '6px 12px' }}>[ BRIDGE ]</a>
-          <a href="#works" className="cyber-btn" style={{ fontSize: '9px', padding: '6px 12px' }}>[ MISSIONS ]</a>
-          <a href="#about" className="cyber-btn" style={{ fontSize: '9px', padding: '6px 12px' }}>[ LOGS ]</a>
-          <a href="#contact" className="cyber-btn" style={{ fontSize: '9px', padding: '6px 12px' }}>[ SIGNAL ]</a>
-          
-          {/* Skewed Light/Dark toggler */}
-          <button 
-            onClick={toggleTheme}
-            className="cyber-btn"
-            style={{ 
-              fontSize: '9px', 
-              padding: '6px 12px',
-              borderColor: 'var(--neon-cyan)',
-              color: 'var(--neon-cyan)',
-              marginLeft: '10px'
-            }}
+        <motion.div className="hero-copy" style={{ y: heroY, opacity: heroOpacity }}>
+          <motion.p
+            className="eyebrow"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.02, ease: [0.22, 1, 0.36, 1] }}
           >
-            [ THEME: {isLightTheme ? 'LIGHT' : 'DARK'} ]
-          </button>
-        </div>
-      </nav>
+            Portfolio / Motion-led frontend / AI product systems
+          </motion.p>
+          <SplitName />
+          <motion.div
+            className="role-stack"
+            variants={containerStagger}
+            initial="hidden"
+            animate="visible"
+            aria-label="Roles"
+          >
+            {heroRoles.map((role) => (
+              <motion.span variants={riseIn} key={role}>
+                {role}
+              </motion.span>
+            ))}
+          </motion.div>
+          <motion.p
+            className="hero-statement"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.82, delay: 1.18, ease: [0.22, 1, 0.36, 1] }}
+          >
+            I build cinematic interfaces, privacy-aware AI products, and useful full-stack tools
+            with the precision of an engineer and the taste of a product designer.
+          </motion.p>
+          <motion.div
+            className="hero-actions"
+            initial={{ opacity: 0, y: 22 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.78, delay: 1.34, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.a className="button primary" href="#work" whileHover={{ y: -4 }} whileTap={{ scale: 0.98 }}>
+              Explore work <ArrowIcon />
+            </motion.a>
+            <motion.a
+              className="button ghost"
+              href={profile.github}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              GitHub <ArrowIcon />
+            </motion.a>
+          </motion.div>
+        </motion.div>
 
-      {/* Starfield drift layer */}
-      <div className="stars-overlay"></div>
+        <OrbitalVisual mouseX={smoothMouseX} mouseY={smoothMouseY} />
 
-      {/* SECTION 1: Space Cockpit Interactive Command Deck (Hero) */}
-      <section id="home" className="page-section" style={{ minHeight: '100vh', justifyContent: 'flex-start' }}>
-        <div className="hud-frame">
-          {/* Left Console: Pilot telemetry, clock & avatar */}
-          <ControlDeck 
-            onSelectBio={() => handleSelectPore(projectsData.find(p => p.id === 'bio'))}
-            onSelectContact={() => handleSelectPore(projectsData.find(p => p.id === 'contact'))}
-            isLightTheme={isLightTheme}
-          />
-
-          {/* Center: The Holographic Coordinate Star Sphere */}
-          <div className="hologram-viewport">
-            <div style={{
-              position: 'absolute',
-              top: '14px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10.5px',
-              color: 'var(--neon-cyan)',
-              letterSpacing: '2px',
-              textAlign: 'center',
-              width: '100%',
-              pointerEvents: 'none',
-              textShadow: '0 0 8px rgba(0, 229, 255, 0.3)'
-            }}>
-              [ HOLOGRAPHIC GALACTIC COORDINATE MAP ]
-            </div>
-
-            <ProjectSphere 
-              projects={projectsData} 
-              onSelectProject={handleSelectPore}
-              activeId={selectedProject?.id}
-            />
-
-            <div style={{
-              position: 'absolute',
-              bottom: '16px',
-              fontFamily: 'var(--font-mono)',
-              fontSize: '10px',
-              color: 'var(--text-dim)',
-              textAlign: 'center',
-              width: '100%',
-              pointerEvents: 'none',
-              letterSpacing: '0.5px'
-            }}>
-              * DRAG STARFIELD TO SPIN CONSTELLATIONS * CLICK AN ORBITAL PORT TO DETECT LOGS *
-            </div>
-          </div>
-
-          {/* Right Console: Diagnostic CRT Screen and Detail Log */}
-          <ProjectOverlay 
-            selectedProject={selectedProject} 
-            onClose={() => setSelectedProject(null)}
-          />
-        </div>
+        <motion.div
+          className="scroll-cue"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.55, duration: 0.65 }}
+          aria-hidden="true"
+        >
+          <span>Scroll</span>
+          <motion.i animate={{ y: [0, 10, 0] }} transition={{ duration: 1.7, repeat: Infinity }} />
+        </motion.div>
       </section>
 
-      {/* SECTION 2: Celestial Missions Grid (Works) */}
-      <section id="works" className="page-section">
-        <div className="section-header">
-          <h2 className="section-title">Celestial Missions</h2>
-          <span className="section-subtitle">Active project nodes loaded in workspace</span>
+      <section className="metrics-band" aria-label="Portfolio highlights">
+        {metrics.map((metric, index) => (
+          <motion.article
+            className="metric-card"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.65, delay: index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+            key={metric.label}
+          >
+            <strong>{metric.value}</strong>
+            <span>{metric.label}</span>
+          </motion.article>
+        ))}
+      </section>
+
+      <section className="work-section section-pad" id="work">
+        <SectionHeader
+          eyebrow="Selected work"
+          title="Product stories with engineering weight."
+          copy="Each project is framed like a product: problem, system decision, outcome, stack, source, and demo where available."
+        />
+        <div className="featured-grid">
+          {featuredProjects.map((project, index) => (
+            <ProjectCard project={project} index={index} key={project.name} />
+          ))}
         </div>
-
-        <div className="works-grid">
-          {projectsData.filter(p => p.type === 'project').map((project) => (
-            <div key={project.id} className="work-card">
-              <div className="corner-trim trim-tl"></div>
-              <div className="corner-trim trim-tr"></div>
-              <div className="corner-trim trim-bl"></div>
-              <div className="corner-trim trim-br"></div>
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span className="cyber-title-badge" style={{ borderColor: project.color, background: 'none', color: project.color }}>
-                  {project.badge}
-                </span>
-                <div style={{ width: '28px', height: '28px', color: project.color }}>
-                  <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    {project.svgPaths.map((d, i) => (
-                      <path key={i} d={d} fill={project.svgFill[i] || 'none'} />
-                    ))}
-                  </svg>
-                </div>
-              </div>
-
-              <div>
-                <h3 style={{ fontSize: '18px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-white)' }}>
-                  {project.title}
-                </h3>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--neon-cyan)', display: 'block', marginTop: '2px' }}>
-                  {project.tagline}
-                </span>
-              </div>
-
-              <p style={{ fontSize: '13px', lineHeight: '1.6', color: 'var(--text-dim)' }}>
-                {project.description}
-              </p>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: 'auto' }}>
-                {project.skills.map(skill => (
-                  <span key={skill} style={{
-                    fontSize: '9.5px',
-                    fontFamily: 'var(--font-mono)',
-                    border: '1px solid rgba(128,128,128,0.15)',
-                    padding: '2px 6px',
-                    borderRadius: '4px',
-                    background: 'rgba(255,255,255,0.01)',
-                    color: 'var(--text-dim)'
-                  }}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-
-              {project.links && (
-                <a 
-                  href={`https://${project.links.github}`} 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="cyber-btn"
-                  style={{ textDecoration: 'none', marginTop: '10px' }}
-                >
-                  DEPLOY SOURCE
-                </a>
-              )}
-            </div>
+        <div className="mini-projects" aria-label="Additional project cards">
+          {projects.slice(3).map((project) => (
+            <motion.article
+              className="mini-project"
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
+              key={project.name}
+            >
+              <span>{project.label}</span>
+              <h3>{project.name}</h3>
+              <p>{project.solution}</p>
+              <a href={project.github} target="_blank" rel="noreferrer">
+                View source <ArrowIcon />
+              </a>
+            </motion.article>
           ))}
         </div>
       </section>
 
-      {/* SECTION 3: Diagnostic Dossier Logs (About) */}
-      <section id="about" className="page-section">
-        <div className="section-header" style={{ borderLeftColor: 'var(--neon-cyan)' }}>
-          <h2 className="section-title">Diagnostic Logs</h2>
-          <span className="section-subtitle">Biography timeline & loaded competencies</span>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '40px', width: '100%', marginTop: '20px' }}>
-          
-          {/* Timeline Panel */}
-          <div className="cyber-panel" style={{ padding: '30px' }}>
-            <div className="corner-trim trim-tl"></div>
-            <div className="corner-trim trim-tr"></div>
-            <div className="corner-trim trim-bl"></div>
-            <div className="corner-trim trim-br"></div>
-
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', color: 'var(--neon-cyan)', marginBottom: '24px' }}>
-              &gt;_ CHRONOLOGY_TIMELINE
-            </h3>
-
-            <div className="chronology-track">
-              {projectsData.find(p => p.id === 'bio').timeline.map((item, idx) => (
-                <div key={idx} className="chronology-node">
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--neon-cyan)', fontWeight: 'bold' }}>
-                    [{item.year}]
-                  </span>
-                  <h4 style={{ fontSize: '15px', fontWeight: 'bold', color: 'var(--text-white)' }}>
-                    {item.title}
-                  </h4>
-                  <span style={{ fontSize: '12px', color: 'var(--text-dim)' }}>
-                    {item.sub}
-                  </span>
-                </div>
-              ))}
+      <section className="about-section section-pad" id="about">
+        <SectionHeader
+          eyebrow="About"
+          title="A student builder with a founder-speed feedback loop."
+          copy="I like products that feel intentional from the first frame: a clear story, responsive motion, useful systems, and enough taste that people remember the experience."
+        />
+        <div className="about-grid">
+          <motion.div
+            className="story-panel"
+            initial={{ opacity: 0, x: -34 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-90px' }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p>
+              I am an Electronics and Communication undergraduate at PDPM IIITDM Jabalpur, building
+              at the intersection of frontend craft, AI interfaces, privacy-first architecture, and
+              startup-style product thinking.
+            </p>
+            <div className="highlight-line">
+              <span>Current direction</span>
+              <strong>Design-led full-stack engineering</strong>
             </div>
-
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--neon-purple)', marginTop: '30px', marginBottom: '14px' }}>
-              &gt;_ PILOT_INTERESTS
-            </h3>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {projectsData.find(p => p.id === 'bio').interests.map(int => (
-                <span key={int} style={{
-                  background: 'rgba(189, 0, 255, 0.05)',
-                  border: '1px solid rgba(189, 0, 255, 0.2)',
-                  color: 'var(--text-white)',
-                  padding: '3px 10px',
-                  borderRadius: '6px',
-                  fontSize: '11px',
-                  fontFamily: 'var(--font-hand)'
-                }}>
-                  {int}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Skills Competencies Panel */}
-          <div className="cyber-panel" style={{ padding: '30px', gap: '20px' }}>
-            <div className="corner-trim trim-tl"></div>
-            <div className="corner-trim trim-tr"></div>
-            <div className="corner-trim trim-bl"></div>
-            <div className="corner-trim trim-br"></div>
-
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', color: 'var(--neon-cyan)', marginBottom: '10px' }}>
-              &gt;_ REGISTERED_MODULES
-            </h3>
-
-            {/* DSA & ECE skill packs */}
-            {projectsData.filter(p => p.type === 'skills').map((skillPack) => (
-              <div key={skillPack.id} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <span className="cyber-title-badge" style={{ alignSelf: 'flex-start', background: skillPack.color === 'var(--neon-green)' ? 'rgba(0, 230, 118, 0.06)' : 'rgba(189, 0, 255, 0.06)', borderColor: skillPack.color, color: skillPack.color }}>
-                  {skillPack.badge}
-                </span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {skillPack.skillGroups.map((group, i) => (
-                    <div key={i} style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(128,128,128,0.1)', padding: '10px 14px', borderRadius: '8px' }}>
-                      <span style={{ fontSize: '10px', fontFamily: 'var(--font-mono)', color: 'var(--text-dim)', display: 'block', marginBottom: '4px' }}>
-                        {group.name}
-                      </span>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {group.items.map(item => (
-                          <span key={item} style={{
-                            border: '1px solid rgba(128,128,128,0.15)',
-                            background: 'rgba(0,0,0,0.15)',
-                            padding: '2px 6px',
-                            borderRadius: '4px',
-                            fontSize: '10.5px',
-                            fontFamily: 'var(--font-mono)',
-                            color: 'var(--text-white)'
-                          }}>
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          </motion.div>
+          <div className="timeline">
+            {journey.map((item, index) => (
+              <motion.article
+                className="timeline-item"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.68, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                key={item.title}
+              >
+                <span>{item.period}</span>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </motion.article>
             ))}
           </div>
-
         </div>
       </section>
 
-      {/* SECTION 4: Contact Transmitter Beam (Contact) */}
-      <section id="contact" className="page-section" style={{ minHeight: 'auto', paddingBottom: '100px' }}>
-        <div className="section-header" style={{ borderLeftColor: 'var(--neon-amber)' }}>
-          <h2 className="section-title">Comms Transmitter</h2>
-          <span className="section-subtitle">Sync signal coordinates to connect</span>
-        </div>
+      <section className="skills-section section-pad" id="skills">
+        <SectionHeader
+          eyebrow="Skills"
+          title="Interactive stack, built for fast scanning."
+          copy="The focus is not a badge wall. These are the tools I use to build interfaces, systems, and product prototypes."
+        />
+        <motion.div className="skill-cloud" variants={containerStagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          {skills.map((skill, index) => (
+            <motion.button
+              className="skill-pill"
+              type="button"
+              variants={scaleIn}
+              whileHover={{
+                y: -8,
+                scale: 1.04,
+                boxShadow: '0 22px 70px rgba(103, 92, 255, 0.26)',
+              }}
+              whileTap={{ scale: 0.96 }}
+              key={skill}
+            >
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              {skill}
+            </motion.button>
+          ))}
+        </motion.div>
+      </section>
 
-        <div className="contact-wrapper">
-          {/* Signal Form Panel */}
-          <div className="cyber-panel" style={{ padding: '30px' }}>
-            <div className="corner-trim trim-tl"></div>
-            <div className="corner-trim trim-tr"></div>
-            <div className="corner-trim trim-bl"></div>
-            <div className="corner-trim trim-br"></div>
-
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', color: 'var(--neon-cyan)', marginBottom: '20px' }}>
-              &gt;_ TRANSMIT_MESSAGE
-            </h3>
-
-            <div style={{ width: '100%' }}>
-              <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--neon-cyan)' }}>
-                    &gt;_ IDENTIFIER (NAME)
-                  </label>
-                  <input 
-                    type="text" 
-                    name="name"
-                    autoComplete="name"
-                    required 
-                    style={{ 
-                      border: '1px solid rgba(0, 229, 255, 0.25)', 
-                      padding: '10px', 
-                      borderRadius: '6px',
-                      fontFamily: 'var(--font-mono)', 
-                      background: 'rgba(2, 4, 15, 0.8)',
-                      color: '#ffffff',
-                      fontSize: '12px'
-                    }}
-                  />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--neon-cyan)' }}>
-                    &gt;_ TRANSMITTER_EMAIL
-                  </label>
-                  <input 
-                    type="email" 
-                    name="email"
-                    autoComplete="email"
-                    required 
-                    style={{ 
-                      border: '1px solid rgba(0, 229, 255, 0.25)', 
-                      padding: '10px', 
-                      borderRadius: '6px',
-                      fontFamily: 'var(--font-mono)', 
-                      background: 'rgba(2, 4, 15, 0.8)',
-                      color: '#ffffff',
-                      fontSize: '12px'
-                    }}
-                  />
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--neon-cyan)' }}>
-                    &gt;_ COMMS_STREAM
-                  </label>
-                  <textarea 
-                    name="message"
-                    required 
-                    rows="4" 
-                    style={{ 
-                      border: '1px solid rgba(0, 229, 255, 0.25)', 
-                      padding: '10px', 
-                      borderRadius: '6px',
-                      fontFamily: 'var(--font-mono)', 
-                      background: 'rgba(2, 4, 15, 0.8)',
-                      color: '#ffffff',
-                      resize: 'none',
-                      fontSize: '12px'
-                    }}
-                  ></textarea>
-                </div>
-                <button 
-                  type="submit" 
-                  className="cyber-btn" 
-                  style={{ 
-                    marginTop: '8px',
-                    borderColor: 'var(--neon-cyan)',
-                    color: 'var(--text-white)'
-                  }}
-                >
-                  BROADCAST BEACON SIGNAL
-                </button>
-              </form>
-            </div>
-          </div>
-
-          {/* Quick Direct Link Terminal */}
-          <div className="cyber-panel" style={{ padding: '30px', justifyContent: 'center', gap: '20px' }}>
-            <div className="corner-trim trim-tl"></div>
-            <div className="corner-trim trim-tr"></div>
-            <div className="corner-trim trim-bl"></div>
-            <div className="corner-trim trim-br"></div>
-
-            <h3 style={{ fontFamily: 'var(--font-mono)', fontSize: '15px', color: 'var(--neon-cyan)' }}>
-              &gt;_ CORRESPONDENCE_LINK
-            </h3>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px', fontFamily: 'var(--font-mono)' }}>
-              <p>&gt; PHONE: +91-9666032914</p>
-              <p>&gt; EMAIL: piyush.kumawat@gmail.com</p>
-              <p>&gt; COORDS: IIITDM JABALPUR, MP, INDIA</p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
-              <a href="https://linkedin.com/in/piyush-kumawat-1a92ba386" target="_blank" rel="noreferrer" className="cyber-btn" style={{ textDecoration: 'none' }}>
-                LINKEDIN
-              </a>
-              <a href="https://github.com/piyush-of" target="_blank" rel="noreferrer" className="cyber-btn" style={{ textDecoration: 'none' }}>
-                GITHUB
-              </a>
-              <a href="https://leetcode.com/u/piyush_of" target="_blank" rel="noreferrer" className="cyber-btn" style={{ textDecoration: 'none' }}>
-                LEETCODE
-              </a>
-            </div>
-          </div>
+      <section className="contact-section section-pad" id="contact">
+        <SectionHeader
+          eyebrow="Contact"
+          title="Let’s build something with taste and traction."
+          copy="Open to internships, product collaborations, frontend engineering roles, AI interface work, and high-agency student teams."
+        />
+        <div className="contact-grid">
+          <motion.div
+            className="contact-card"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-90px' }}
+            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span>Signal links</span>
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn <ArrowIcon />
+            </a>
+            <a href={profile.leetcode} target="_blank" rel="noreferrer">
+              LeetCode <ArrowIcon />
+            </a>
+          </motion.div>
+          <motion.form
+            className="contact-form"
+            onSubmit={handleContactSubmit}
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-90px' }}
+            transition={{ duration: 0.72, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" autoComplete="name" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" autoComplete="email" required />
+            </label>
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="5" required />
+            </label>
+            <motion.button className="button primary" type="submit" whileHover={{ y: -4 }} whileTap={{ scale: 0.98 }}>
+              Open email draft <ArrowIcon />
+            </motion.button>
+          </motion.form>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{
-        width: '100%',
-        padding: '30px 40px',
-        borderTop: '1px solid var(--glass-border)',
-        background: 'var(--glass-bg)',
-        textAlign: 'center',
-        fontSize: '11px',
-        fontFamily: 'var(--font-mono)',
-        color: 'var(--text-dim)',
-        zIndex: 1,
-        position: 'relative'
-      }}>
-        © 2026 PIYUSH KUMAWAT. ALL BEACONS EMITTED.
+      <footer className="site-footer">
+        <span>2026 / {profile.name}</span>
+        <a href="#top">Back to top</a>
       </footer>
-    </div>
+    </main>
   );
 }

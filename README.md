@@ -157,8 +157,8 @@ Graduated 2025
 ## `>_ COMMS`
 
 ```txt
-EMAIL    : piyush.kumawat@gmail.com
-PHONE    : +91-9666032914
+EMAIL    : piyush.kumawat0412@gmail.com
+PHONE    : +91 9660329142
 GITHUB   : github.com/piyush-of
 LINKEDIN : linkedin.com/in/piyush-kumawat-1a92ba386
 LEETCODE : leetcode.com/u/piyush_of
