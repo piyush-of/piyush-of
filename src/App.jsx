@@ -9,6 +9,7 @@ const profile = {
   github: 'https://github.com/piyush-of',
   linkedin: 'https://linkedin.com/in/piyush-kumawat-1a92ba386',
   leetcode: 'https://leetcode.com/u/piyush_of',
+  site: 'https://piyush-of.vercel.app',
 };
 
 const navItems = [
@@ -19,19 +20,20 @@ const navItems = [
   { label: 'Contact', href: '#contact' },
 ];
 
-const heroRoles = ['Engineering Student', 'Software Developer', 'Startup Builder'];
+const heroRoles = ['ECE Undergrad @ IIITDM', 'Full-Stack Developer', 'AI Product Builder'];
 
 const projects = [
   {
-    name: 'MUSE',
-    label: 'AI Fashion Intelligence',
+    name: 'MUSE V2',
+    label: 'AI Styling Engine',
     year: '2026',
     number: '01',
-    problem: 'Personal styling tools rarely turn body, tone, and wardrobe context into practical decisions.',
+    problem: 'Personal styling tools rarely turn body, tone, weather, and wardrobe context into a single practical decision.',
     solution:
-      'Built a full-stack SaaS platform with AI outfit analysis, skin-tone profiles, secure auth, CI/CD, and production deployment.',
-    outcome: '11 personalized style profiles, JWT refresh-token security, Docker Compose, Vercel, Railway, and Neon PostgreSQL.',
-    stack: ['React 19', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'Docker', 'Gemini API'],
+      'Built a full-stack AI styling engine on Next.js 16 (App Router, Turbopack) with Auth.js v5 credential auth and Prisma over PostgreSQL. A weighted "Daily Capsule" engine blends wear-recency, style-profile alignment, and live Open-Meteo weather with parallelized Gemini reasoning calls to keep compile time low.',
+    outcome:
+      'Gemini multimodal vision auto-tags garment photos (category, color, season, formality) with Cloudinary hosting; swipe-deck UI built with Tailwind v4, Framer Motion, Zustand, and TanStack Query.',
+    stack: ['Next.js 16', 'TypeScript', 'Prisma', 'PostgreSQL', 'Tailwind CSS v4', 'Gemini API', 'Cloudinary'],
     github: 'https://github.com/piyush-of/MUSE-Personal-designer',
     live: '',
     accent: 'cyan',
@@ -41,70 +43,84 @@ const projects = [
     label: 'Privacy-first AI Analyzer',
     year: '2026',
     number: '02',
-    problem: 'AI photo analysis feels risky when users cannot tell what happens to personal images.',
+    problem: 'AI photo analysis feels risky when users cannot tell what happens to their personal images.',
     solution:
-      'Created a Next.js product that encrypts uploads client-side, decrypts only in server memory, and zeroes buffers after analysis.',
-    outcome: 'A privacy-led product story powered by Gemini vision for body shape, undertone, and styling recommendations.',
+      'A Next.js 15 app using Gemini vision to analyze body shape, skin tone/undertone, and styling from user-uploaded photos, built around a zero-disk-storage privacy architecture.',
+    outcome:
+      'Images are encrypted client-side with AES-256-GCM via the Web Crypto API, decrypted only in server memory, and the buffer is explicitly zeroed after analysis — nothing is ever persisted or logged.',
     stack: ['Next.js 15', 'React', 'TypeScript', 'Web Crypto API', 'Gemini Vision'],
     github: 'https://github.com/piyush-of/Lookism',
     live: 'https://lookism-six.vercel.app/',
     accent: 'violet',
   },
   {
-    name: 'IIITDM Portal',
-    label: 'College ERP System',
+    name: 'Bhagavata',
+    label: 'Gita Study & Meditation App',
     year: '2026',
     number: '03',
-    problem: 'Academic workflows become slow when student, faculty, and admin tools are scattered.',
+    problem: 'Reading and reflecting on the Bhagavad Gita online rarely comes with real study or practice tools.',
     solution:
-      'Built a role-based ERP for attendance, assignments, notices, result tracking, CGPA views, and protected routes.',
-    outcome: 'A practical MongoDB-backed REST API and permission model for campus operations.',
-    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT', 'REST API'],
-    github: 'https://github.com/piyush-of/iiitdm-portal',
-    live: 'https://iiitdm-portal.vercel.app',
-    accent: 'blue',
-  },
-  {
-    name: 'Bhagavata',
-    label: 'Devotional Web Space',
-    year: '2026',
-    number: '04',
-    problem: 'Spiritual reading online is often surrounded by visual noise.',
-    solution: 'Created a calm reading-first devotional interface with restrained interaction and focused atmosphere.',
-    outcome: 'A softer product design exercise around attention, reflection, and emotional pacing.',
-    stack: ['JavaScript', 'CSS', 'HTML', 'Vercel'],
+      'A full MERN app (Express 5 + Mongoose, React 19 + Vite) with a 700-verse library across Sanskrit, transliteration, English, and Hindi, full-text search, and pagination. Auth uses short-lived JWT access tokens with rotated httpOnly refresh cookies, Zod validation, and rate-limited auth routes.',
+    outcome:
+      'Adds a meditation timer with session logging and streak stats, a date-hashed "verse of the day," Jest/Supertest + Vitest/RTL test coverage, Docker Compose, and GitHub Actions CI.',
+    stack: ['React 19', 'Vite', 'Node.js', 'Express 5', 'MongoDB', 'JWT', 'Docker'],
     github: 'https://github.com/piyush-of/Bhagavata',
     live: 'https://bhagavata.vercel.app',
-    accent: 'cyan',
+    accent: 'blue',
+  },
+];
+
+const sideProjects = [
+  {
+    label: 'Open Source',
+    name: 'GSSoC 2026 — DevTrack',
+    body: 'Contributed to DevTrack, an open-source developer productivity dashboard (Next.js, Supabase), merging pull requests that fixed bugs in the contribution-tracking and dashboard modules.',
+    link: 'https://github.com/piyush-of',
+  },
+  {
+    label: 'Problem Solving',
+    name: '200+ Problems Solved',
+    body: 'Across LeetCode, Codeforces, and CodeChef (2★ rated) — Dynamic Programming, Game Theory, Divide & Conquer, Math, Hash Tables, Greedy, Two Pointers, and Graphs.',
+    link: 'https://leetcode.com/u/piyush_of',
   },
 ];
 
 const metrics = [
-  { value: '3+', label: 'Full-stack products' },
-  { value: '11', label: 'AI style profiles' },
+  { value: '3', label: 'Full-stack products shipped' },
+  { value: '200+', label: 'DSA problems solved' },
   { value: '7.6', label: 'CGPA at IIITDM' },
   { value: '2026', label: 'GSSoC contributor' },
 ];
 
 const journey = [
   {
-    period: '2025 - 2029',
-    title: 'B.Tech ECE at IIITDM Jabalpur',
-    body: 'Building a foundation in electronics, communication systems, and engineering discipline.',
+    period: '2025 – 2029',
+    title: 'B.Tech ECE at PDPM IIITDM Jabalpur',
+    body: 'Building a foundation in electronics, communication systems, and engineering discipline — currently at a 7.6/10 CGPA.',
   },
   {
     period: '2026',
-    title: 'Full-stack product experiments',
-    body: 'Shipping fashion AI, student workflow systems, and focused web experiences with production tooling.',
+    title: 'Open source & DSA practice',
+    body: 'Contributing to DevTrack through GSSoC 2026, and solving 200+ problems across LeetCode, Codeforces, and CodeChef.',
   },
   {
     period: 'Now',
-    title: 'Design-led engineering direction',
-    body: 'Combining frontend craft, privacy-aware architecture, and startup-style product storytelling.',
+    title: 'Full-stack + AI product builder',
+    body: 'Shipping MUSE V2, Lookism, and Bhagavata with production tooling — auth, CI/CD, Docker, and testing baked in.',
   },
 ];
 
-const skills = ['C++', 'DSA', 'JavaScript', 'React', 'Next.js', 'Tailwind', 'Git', 'Node.js', 'TypeScript'];
+const coreSkills = ['TypeScript', 'React', 'Next.js', 'Node.js', 'Express.js', 'PostgreSQL', 'MongoDB', 'Tailwind CSS', 'Docker'];
+
+const skillCategories = [
+  { title: 'Languages', items: ['JavaScript', 'TypeScript', 'Python', 'C++', 'C', 'SQL', 'HTML5', 'CSS3'] },
+  { title: 'Frontend', items: ['React', 'Next.js', 'Vite', 'Tailwind CSS', 'Framer Motion'] },
+  { title: 'Backend', items: ['Node.js', 'Express.js', 'Prisma ORM'] },
+  { title: 'Databases', items: ['PostgreSQL', 'MongoDB'] },
+  { title: 'Tools & Platforms', items: ['Git', 'GitHub', 'Docker', 'Vercel', 'Railway', 'Figma'] },
+];
+
+const spokenLanguages = 'Hindi (Native) · English (Fluent) · Japanese (Basic)';
 
 const containerStagger = {
   hidden: {},
@@ -519,21 +535,21 @@ export default function App() {
             <ProjectCard project={project} index={index} key={project.name} />
           ))}
         </div>
-        <div className="mini-projects" aria-label="Additional project cards">
-          {projects.slice(3).map((project) => (
+        <div className="mini-projects" aria-label="Open source and problem solving">
+          {sideProjects.map((item) => (
             <motion.article
               className="mini-project"
               initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
-              key={project.name}
+              key={item.name}
             >
-              <span>{project.label}</span>
-              <h3>{project.name}</h3>
-              <p>{project.solution}</p>
-              <a href={project.github} target="_blank" rel="noreferrer">
-                View source <ArrowIcon />
+              <span>{item.label}</span>
+              <h3>{item.name}</h3>
+              <p>{item.body}</p>
+              <a href={item.link} target="_blank" rel="noreferrer">
+                View <ArrowIcon />
               </a>
             </motion.article>
           ))}
@@ -555,9 +571,9 @@ export default function App() {
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             <p>
-              I am an Electronics and Communication undergraduate at PDPM IIITDM Jabalpur, building
-              at the intersection of frontend craft, AI interfaces, privacy-first architecture, and
-              startup-style product thinking.
+              I am an Electronics and Communication undergraduate at PDPM IIITDM Jabalpur (Class of
+              2029, 7.6 CGPA), building at the intersection of frontend craft, AI interfaces,
+              privacy-first architecture, and startup-style product thinking.
             </p>
             <div className="highlight-line">
               <span>Current direction</span>
@@ -590,7 +606,7 @@ export default function App() {
           copy="The focus is not a badge wall. These are the tools I use to build interfaces, systems, and product prototypes."
         />
         <motion.div className="skill-cloud" variants={containerStagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          {skills.map((skill, index) => (
+          {coreSkills.map((skill, index) => (
             <motion.button
               className="skill-pill"
               type="button"
@@ -608,6 +624,35 @@ export default function App() {
             </motion.button>
           ))}
         </motion.div>
+
+        <motion.div
+          className="skill-categories"
+          variants={containerStagger}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+        >
+          {skillCategories.map((group) => (
+            <motion.article className="skill-category" variants={riseIn} key={group.title}>
+              <h4>{group.title}</h4>
+              <div className="tag-row">
+                {group.items.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </motion.article>
+          ))}
+        </motion.div>
+
+        <motion.p
+          className="spoken-languages"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span>Spoken</span> {spokenLanguages}
+        </motion.p>
       </section>
 
       <section className="contact-section section-pad" id="contact">
